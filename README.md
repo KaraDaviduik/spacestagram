@@ -1,4 +1,7 @@
 # Spacestagram
+Author: Kara Daviduik
+
+Project hosted on Netlify: https://spacestagram-kdaviduik.netlify.app/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

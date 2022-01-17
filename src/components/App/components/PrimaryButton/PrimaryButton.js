@@ -2,14 +2,7 @@ import { Button } from "@shopify/polaris";
 
 export function PrimaryButton({ handlePrimaryButtonClick, buttonText }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "10px",
-      }}
-    >
+    <div className="centered">
       <Button primary onClick={handlePrimaryButtonClick}>
         {buttonText}
       </Button>

@@ -82,14 +82,7 @@ function App() {
               />
               {error && <Error setError={setError} setLoading={setLoading} />}
               {loading && !error && (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "10px",
-                  }}
-                >
+                <div className="centered">
                   <Spinner
                     size="large"
                     hasFocusableParent={false}

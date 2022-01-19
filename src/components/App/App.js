@@ -2,67 +2,24 @@ import * as React from "react";
 import "@shopify/polaris/build/esm/styles.css";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { useLocalStorageState } from "../../utils";
-import { PhotoList } from "./components/PhotoList/PhotoList";
-import { PrimaryButton } from "./components/PrimaryButton/PrimaryButton";
-import { Error } from "./components/Error/Error";
-import { Page, AppProvider, Card, Layout, Spinner } from "@shopify/polaris";
-
-const key = "5gO4vzjXZOXYoz91YqFcIYH6Q6ROVS2ircNrqR87";
-const photoCount = 20;
-const baseUrl = "https://api.nasa.gov/planetary/apod";
-const url = `${baseUrl}?api_key=${key}&thumbs=true&count=${photoCount}`;
+import { Page, AppProvider, Layout } from "@shopify/polaris";
+import { LikedPhotos } from "./components/LikedPhotos/LikedPhotos.js";
+import { AllPhotos } from "./components/AllPhotos/AllPhotos.js";
 
 function App() {
-  const [error, setError] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
+  const [allPhotos, setAllPhotos] = React.useState([]);
   const [likedPhotos, setLikedPhotos] = useLocalStorageState("likedPhotos", []);
-  const [photos, setPhotos] = React.useState([]);
 
-  function handleUnlike(photoId) {
+  function handleUnlikePhoto(photoId) {
     const likedPhotosCopy = likedPhotos.filter((p) => p.url !== photoId);
     setLikedPhotos(likedPhotosCopy);
   }
 
-  function handleLike(photoId) {
-    const photosCopy = [...photos];
+  function handleLikePhoto(photoId) {
+    const photosCopy = [...allPhotos];
     const i = photosCopy.findIndex((p) => p.url === photoId);
     setLikedPhotos([{ ...photosCopy[i] }, ...likedPhotos]);
   }
-
-  function handlePrimaryButtonClick() {
-    setLoading(true);
-  }
-
-  function fetchPhotosFromUrl(url) {
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        const newPhotoData = data.filter(
-          (p) =>
-            p.media_type === "image" &&
-            !photos.some((photo) => photo.url === p.url)
-        );
-        setPhotos([...photos, ...newPhotoData]);
-      })
-      .catch((error) => {
-        console.error("Error", error);
-        setError(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
-
-  React.useEffect(() => {
-    if (loading) {
-      fetchPhotosFromUrl(url);
-    }
-  }, [loading]);
 
   return (
     <AppProvider i18n={enTranslations}>
@@ -73,40 +30,20 @@ function App() {
       >
         <Layout>
           <Layout.Section oneHalf>
-            <Card title="Photos" sectioned>
-              <PhotoList
-                photos={photos}
-                likedPhotos={likedPhotos}
-                handleLike={handleLike}
-                handleUnlike={handleUnlike}
-              />
-              {error && <Error setError={setError} setLoading={setLoading} />}
-              {loading && !error && (
-                <div className="centered">
-                  <Spinner
-                    size="large"
-                    hasFocusableParent={false}
-                    accessibilityLabel="Loading photos"
-                  />
-                </div>
-              )}
-              {!loading && !error && (
-                <PrimaryButton
-                  handlePrimaryButtonClick={handlePrimaryButtonClick}
-                  buttonText={"Load more photos"}
-                />
-              )}
-            </Card>
+            <AllPhotos
+              allPhotos={allPhotos}
+              setAllPhotos={setAllPhotos}
+              likedPhotos={likedPhotos}
+              handleLikePhoto={handleLikePhoto}
+              handleUnlikePhoto={handleUnlikePhoto}
+            />
           </Layout.Section>
           <Layout.Section oneHalf>
-            <Card title="Liked photos" sectioned>
-              <PhotoList
-                photos={likedPhotos}
-                likedPhotos={likedPhotos}
-                handleLike={handleLike}
-                handleUnlike={handleUnlike}
-              />
-            </Card>
+            <LikedPhotos
+              likedPhotos={likedPhotos}
+              handleLikePhoto={handleLikePhoto}
+              handleUnlikePhoto={handleUnlikePhoto}
+            />
           </Layout.Section>
         </Layout>
       </Page>

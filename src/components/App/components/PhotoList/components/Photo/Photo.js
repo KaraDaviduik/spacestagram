@@ -1,8 +1,6 @@
 import { MediaCard } from "@shopify/polaris";
 
-export function Photo({ photo, isLiked, handleLike, handleUnlike }) {
-  const photoIsLiked = isLiked(photo.url);
-
+export function Photo({ photo, photoIsLiked, handleLike, handleUnlike }) {
   return (
     <MediaCard
       title={`${photo.title}, taken on ${photo.date}`}

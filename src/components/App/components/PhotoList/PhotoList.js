@@ -1,15 +1,20 @@
 import { Photo } from "./components/Photo/Photo";
 
-export function PhotoList({ photos, likedPhotos, handleLike, handleUnlike }) {
+export function PhotoList({
+  photosToDisplay,
+  likedPhotos,
+  handleLike,
+  handleUnlike,
+}) {
   function isLiked(photoId) {
     return likedPhotos.some((p) => p.url === photoId);
   }
 
-  const listItems = photos.map((p) => (
+  const listItems = photosToDisplay.map((p) => (
     <Photo
       key={p.url}
       photo={p}
-      isLiked={isLiked}
+      photoIsLiked={isLiked(p.url)}
       handleLike={handleLike}
       handleUnlike={handleUnlike}
     />

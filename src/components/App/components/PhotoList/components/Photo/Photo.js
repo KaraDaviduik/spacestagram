@@ -11,7 +11,7 @@ export function Photo({ photo, photoIsLiked, handleLike, handleUnlike }) {
           : () => handleLike(photo.url),
       }}
       description={photo.explanation}
-      portrait={false}
+      portrait={true}
     >
       <img
         alt=""

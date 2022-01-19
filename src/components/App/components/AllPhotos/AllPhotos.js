@@ -14,7 +14,7 @@ export function AllPhotos({
   const key = "5gO4vzjXZOXYoz91YqFcIYH6Q6ROVS2ircNrqR87";
   const photoCount = 20;
   const baseUrl = "https://api.nasa.gov/planetary/apod";
-  const url = `${baseUrl}?api_key=${key}&thumbs=true&count=${photoCount}`;
+  const url = `${baseUrl}?api_key=${key}&count=${photoCount}`;
 
   React.useEffect(() => {
     fetchPhotosFromUrl();
@@ -45,16 +45,17 @@ export function AllPhotos({
       });
   }
 
-  function handleError() {
+  function handleErrorButtonClick() {
     setError(null);
     setLoading(true);
+    fetchPhotosFromUrl();
   }
 
   function handleErrorDismiss() {
     setError(null);
   }
 
-  function handleButtonClick() {
+  function handleLoadPhotosButtonClick() {
     setLoading(true);
     fetchPhotosFromUrl();
   }
@@ -70,7 +71,7 @@ export function AllPhotos({
       <div className="allPhotosError">
         {error && (
           <Banner
-            action={{ content: "Try again", onClick: handleError }}
+            action={{ content: "Try again", onClick: handleErrorButtonClick }}
             status="warning"
             title="Unable to fetch photos."
             onDismiss={handleErrorDismiss}
@@ -86,7 +87,7 @@ export function AllPhotos({
           />
         )}
         {!loading && !error && (
-          <Button primary onClick={handleButtonClick}>
+          <Button primary onClick={handleLoadPhotosButtonClick}>
             Load more photos
           </Button>
         )}

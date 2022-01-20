@@ -1,7 +1,7 @@
 # Spacestagram
 Author: Kara Daviduik
 
-Project hosted on Netlify: https://spacestagram-kdaviduik.netlify.app/
+[Spacestagram](https://spacestagram-kdaviduik.netlify.app/) is a responsive web application hosted on Netlify, featuring photos from NASA’s [Astronomy Picture of the Day](https://api.nasa.gov/#apod). Users can view and read about photos, load more photos, and “like” and “unlike” photos. The list of photos from the API is random, and liked photos are showcased in a separate list so that liked photos will persist when users leave or refresh the page. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

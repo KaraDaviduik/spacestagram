@@ -3,7 +3,7 @@ import { MediaCard } from "@shopify/polaris";
 export function Photo({ photo, photoIsLiked, handleLike, handleUnlike }) {
   return (
     <MediaCard
-      title={`${photo.title}, taken on ${photo.date}`}
+      title={`${photo.title.trim()}, taken on ${photo.date}`}
       primaryAction={{
         content: photoIsLiked ? "Unlike photo" : "Like photo",
         onAction: photoIsLiked
